@@ -28,7 +28,7 @@ $server = ""
 $database = ""
 $userId = ""
 $password = ""
-$connectionString = "Data Source=tcp:$server,1433;Initial Catalog=$database;User Id=$userId;Password=$password;";
+$connectionString = "Data Source=$server;Initial Catalog=$database;User Id=$userId;Password=$password;";
 $languageId = 2;
 
 #Query to get all person information adjust to liking#
