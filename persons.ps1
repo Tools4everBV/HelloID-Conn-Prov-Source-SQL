@@ -1,4 +1,4 @@
-function PerfromQuery($Query, $ConnectionString) {
+function GetDataFromSqlDatabase($Query, $ConnectionString) {
     try {
         # Initialize connection and query information
         # Connect to the SQL server
@@ -8,19 +8,24 @@ function PerfromQuery($Query, $ConnectionString) {
         $SqlCmd.Connection = $SqlConnection;
         $SqlAdapter = New-Object System.Data.SqlClient.SqlDataAdapter;
         
-        #Query to get all person information adjust to liking#
         $SqlCmd.CommandText = $query;
         $SqlAdapter.SelectCommand = $SqlCmd;
         
         $DataSet = New-Object System.Data.DataSet;
         $SqlAdapter.Fill($DataSet) | out-null;
-        $sqlData = $DataSet.Tables[0];
-        return $sqlData | Select-Object -Property * -ExcludeProperty RowError, RowState, Table, ItemArray, HasErrors;
+        return $DataSet.Tables[0] | Select-Object -Property * -ExcludeProperty RowError, RowState, Table, ItemArray, HasErrors;
     }
     catch {
         Write-Error "Something went wrong while connecting to the SQL server";
         Write-Error $_.Exception.Message;
         Exit;
+    }
+    finally 
+    {
+        if($SqlConnection -and $SqlConnection.State -eq [System.Data.ConnectionState]::Open)
+        {
+            $SqlConnection.Close()
+        }
     }
 }
 
@@ -98,11 +103,11 @@ $departmentsQuery = "SELECT [Organisatorische_eenheid] as [Id]
                     FROM [dbo].[T4E_IAM_OrganizationalUnits] WHERE [lang_id] = $languageId"
 
     
-$persons = PerfromQuery -Query $personQuery -ConnectionString $connectionString
+$persons = GetDataFromSqlDatabase -Query $personQuery -ConnectionString $connectionString
 #$personLookup = $persons | ForEach-Object { $_ } #copy persons
-$contracts = PerfromQuery -Query $contractsQuery -ConnectionString $connectionString
-$functions = PerfromQuery -Query $functionsQuery -ConnectionString $connectionString
-$departments = PerfromQuery -Query $departmentsQuery -ConnectionString $connectionString
+$contracts = GetDataFromSqlDatabase -Query $contractsQuery -ConnectionString $connectionString
+$functions = GetDataFromSqlDatabase -Query $functionsQuery -ConnectionString $connectionString
+$departments = GetDataFromSqlDatabase -Query $departmentsQuery -ConnectionString $connectionString
 
 
 Foreach ($person in $persons) {
