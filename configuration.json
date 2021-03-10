@@ -1,0 +1,46 @@
+[
+    {
+      "key": "server",
+      "type": "input",
+      "defaultValue": "",
+      "templateOptions": {
+        "label": "SQL Server",
+        "placeholder": "tcp:[namehere].database.windows.net,1433",
+        "description": "Please add a SQL server to connect with",
+        "required": true
+      }
+    },
+    {
+      "key": "database",
+      "type": "input",
+      "defaultValue": "",
+      "templateOptions": {
+        "label": "SQL Database",
+        "placeholder": "Please enter Database name",
+        "description": "Please add a SQL database to connect with",
+        "required": true
+      }
+    },
+    {
+      "key": "user",
+      "type": "input",
+      "defaultValue": "",
+      "templateOptions": {
+        "label": "SQL User",
+        "placeholder": "Please enter SQL User",
+        "description": "Please add a SQL user to connect with",
+        "required": true
+      }
+    },
+    {
+      "key": "password",
+      "type": "input",
+      "defaultValue": "",
+      "templateOptions": {
+        "label": "Please add a SQL user password to connect with",
+        "type": "password",
+        "placeholder": "Please enter a password",
+        "required": true
+      }
+    }
+  ]

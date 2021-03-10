@@ -1,4 +1,4 @@
-function GetDataFromSqlDatabase($Query, $ConnectionString) {
+function PerfromQuery($Query, $ConnectionString) {
     try {
         # Initialize connection and query information
         # Connect to the SQL server
@@ -8,33 +8,28 @@ function GetDataFromSqlDatabase($Query, $ConnectionString) {
         $SqlCmd.Connection = $SqlConnection;
         $SqlAdapter = New-Object System.Data.SqlClient.SqlDataAdapter;
         
+        #Query to get all person information adjust to liking#
         $SqlCmd.CommandText = $query;
         $SqlAdapter.SelectCommand = $SqlCmd;
         
         $DataSet = New-Object System.Data.DataSet;
         $SqlAdapter.Fill($DataSet) | out-null;
-        return $DataSet.Tables[0] | Select-Object -Property * -ExcludeProperty RowError, RowState, Table, ItemArray, HasErrors;
+        $sqlData = $DataSet.Tables[0];
+        return $sqlData | Select-Object -Property * -ExcludeProperty RowError, RowState, Table, ItemArray, HasErrors;
     }
     catch {
         Write-Error "Something went wrong while connecting to the SQL server";
         Write-Error $_.Exception.Message;
         Exit;
     }
-    finally 
-    {
-        if($SqlConnection -and $SqlConnection.State -eq [System.Data.ConnectionState]::Open)
-        {
-            $SqlConnection.Close()
-        }
-    }
 }
-
-$server = ""
-$database = ""
-$userId = ""
-$password = ""
+$config = ConvertFrom-Json $configuration
+$server = $config.server
+$database = $config.database
+$userId = $config.user
+$password = $config.password
 $connectionString = "Data Source=$server;Initial Catalog=$database;User Id=$userId;Password=$password;";
-$languageId = 2;
+$languageId = "(1,2)"; # 1=NL, 2=EN
 
 #Query to get all person information adjust to liking#
 $personQuery = "SELECT [Medewerker] as [EmployeeId]
@@ -69,7 +64,7 @@ $personQuery = "SELECT [Medewerker] as [EmployeeId]
                           ,[Datum_in_dienst] as [EmploymentStartDate] 
                           ,[Datum_uit_dienst] as [EmploymentEndDate]
                           ,[MultipleContracts] as [HasMultipleContracts]
-      FROM [dbo].[T4E_IAM_Persons] WHERE [lang_id] = $languageId
+      FROM [dbo].[T4E_IAM_Persons] WHERE [lang_id] in $languageId
       ORDER by [Medewerker] asc";
 
 
@@ -86,13 +81,13 @@ $contractsQuery = "SELECT [Medewerker] as [EmployeeId]
                           ,[Kostenplaats] as [CostCenter]
                           ,[Leidinggevende] as [PrimaryManagerId]
                           ,[Vervangende_leidinggevende] as [SecondaryManagerId]
-                    FROM [dbo].[T4E_IAM_Contracts] WHERE [lang_id] = $languageId"
+                    FROM [dbo].[T4E_IAM_Contracts] WHERE [lang_id] in $languageId"
 
 
 #Query to get all function information adjust to liking#
 $functionsQuery = "SELECT [Functie] as [Id]
                           ,[Omschrijving] as [Description]
-                    FROM [dbo].[T4E_IAM_OrganizationalFunctions] WHERE [lang_id] = $languageId"
+                    FROM [dbo].[T4E_IAM_OrganizationalFunctions] WHERE [lang_id] in $languageId"
 
 #Query to get all department information adjust to liking#
 $departmentsQuery = "SELECT [Organisatorische_eenheid] as [Id]
@@ -100,14 +95,14 @@ $departmentsQuery = "SELECT [Organisatorische_eenheid] as [Id]
                             ,[Omschrijving] as [Name]
                             ,[Leidinggevende] as [ManagerId]
                             ,[Parent] as [ParentDepartmentId]
-                    FROM [dbo].[T4E_IAM_OrganizationalUnits] WHERE [lang_id] = $languageId"
+                    FROM [dbo].[T4E_IAM_OrganizationalUnits] WHERE [lang_id] in $languageId"
 
     
-$persons = GetDataFromSqlDatabase -Query $personQuery -ConnectionString $connectionString
+$persons = PerfromQuery -Query $personQuery -ConnectionString $connectionString
 #$personLookup = $persons | ForEach-Object { $_ } #copy persons
-$contracts = GetDataFromSqlDatabase -Query $contractsQuery -ConnectionString $connectionString
-$functions = GetDataFromSqlDatabase -Query $functionsQuery -ConnectionString $connectionString
-$departments = GetDataFromSqlDatabase -Query $departmentsQuery -ConnectionString $connectionString
+$contracts = PerfromQuery -Query $contractsQuery -ConnectionString $connectionString
+$functions = PerfromQuery -Query $functionsQuery -ConnectionString $connectionString
+$departments = PerfromQuery -Query $departmentsQuery -ConnectionString $connectionString
 
 
 Foreach ($person in $persons) {
@@ -118,6 +113,7 @@ Foreach ($person in $persons) {
 
     #link contracts
     [array]$contractsOfPerson = $($contracts | Where-Object { $_.EmployeeId -eq $person.EmployeeId })
+    if($null -eq $contractsOfPerson){$contractsOfPerson = @()}
     $person | Add-Member -Name "Contracts" -MemberType NoteProperty -Value $contractsOfPerson -Force;
 
     foreach ($contract in $person.Contracts) {
