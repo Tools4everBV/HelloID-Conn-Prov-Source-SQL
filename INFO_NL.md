@@ -1,4 +1,4 @@
-SQL is een computertaal voor relationele databasemanagementsystemen. Met behulp van een connector kan je SQL aan de identity & access management (IAM)-oplossing HelloID van Tools4ever koppelen. Zo kan HelloID informatie ophalen uit SQL-databases als aanvullende stap bij het in-, uit- en doorstroomproces. Of SQL inzetten als extra bronconnector voor het ophalen van additionele gegevens uit databases ter aanvulling van de data die beschikbaar is in je HRM-systeem. In dit artikel lees je meer over deze koppelingen en de mogelijkheden die zij bieden.  
+SQL is een computertaal voor relationele databasemanagementsystemen. Met behulp van een connector kan je SQL aan de identity & access management (IAM)-oplossing HelloID van Tools4ever koppelen. Zo kan HelloID informatie uit een SQL-database halen en als brongegeven gebruiken. Tevens kan een SQL-database gebruikt worden als extra bronconnector. Hierbij kan gedacht worden aan rooster- of planningsinformatie. Met behulp van de standaard functionaliteit “person aggregation” kunnen dat soort informatie als additionele contractregels bij de bestaande medewerker uit het HR systeem toegevoegd worden. In dit artikel lees je meer over deze koppelingen en de mogelijkheden die zij bieden.  
 
 ## Wat is SQL
 
@@ -6,7 +6,7 @@ SQL staat voor Structured Query Language. Het gaat om een programmeertaal die wo
 
 ## Waarom is SQL koppeling handig?
 
-Bedrijven slaan allerlei gegevens op in SQL-databases, die voor zeer diverse doelen inzetbaar zijn. Zo kan je een SQL-database door een applicatie laten gebruiken voor het vastleggen van alle accounts die binnen je organisatie in gebruik zijn. Denk echter ook aan het vastleggen van historische gegevens in een SQL-database, waarbij de database als een soort logging repository dient. Je kunt in een SQL-database ook allerlei gegevens opslaan die je Human Resource Management (HRM)-systeem ondersteunen, zoals aanvullende persoonsgegevens.
+Bedrijven slaan allerlei gegevens op in SQL-databases, die voor zeer diverse doelen inzetbaar zijn. Zo kan je een SQL-database door een applicatie laten gebruiken voor het vastleggen van alle accounts die binnen je organisatie in gebruik zijn. Denk echter ook aan het vastleggen van historische gegevens in een SQL-database, waarbij de database als een soort logging repository dient.
 
 De SQL connector maakt een koppeling met veelvoorkomende systemen mogelijk, waaronder Active Directory/Entra ID. Meer details over de koppeling met deze en andere bronsystemen vind je verderop in het artikel.
 
@@ -36,9 +36,9 @@ Je kunt SQL ook als bronsysteem inzetten, waarbij je additionele gegevens ophaal
 
 | **Wijziging in bronsysteem** |	**Procedure in SQL** | 
 | ---------------------------- | --------------------- | 
-| **Nieuwe medewerker** |	Indien een nieuwe medewerker in dienst treedt, haalt HelloID uit je bronsysteem allerlei informatie op. In sommige gevallen is er aanvullende informatie beschikbaar in een SQL-database, zoals relevante persoonsgegevens. De beschikbare aanvullende gegevens zijn sterk afhankelijk van de SQL-databases waarvan je gebruik maakt. |
+| **Nieuwe medewerker** |	Indien een nieuwe medewerker in dienst treedt, haalt HelloID uit je bronsysteem allerlei informatie op. In sommige gevallen is er aanvullende informatie beschikbaar in een SQL-database, zoals relevante planning of roostergegevens. De beschikbare aanvullende gegevens zijn sterk afhankelijk van de SQL-databases waarvan je gebruik maakt. |
 | **Andere functie medewerker** |	Indien de functie van een medewerker wijzigt, brengt dit in veel gevallen veranderingen in accounts en autorisaties met zich mee. HelloID kan vanuit SQL-databases aanvullende informatie ophalen voor het uitvoeren van dit proces. Denk hierbij aan informatie over de nieuwe afdeling van een medewerker en de systemen waarvan deze afdeling gebruik maakt. |
-| **Medewerker treedt uit dienst** |	HelloID houdt het dienstverband van werknemers in het oog, en detecteert indien deze afloopt. Voor het intrekken van de autorisaties van de uitstromende gebruiker en blokkeren van gebruikersaccounts in doelsystemen kan de IAM-oplossing indien nodig aanvullende informatie ophalen uit SQL-databases.|
+| **Medewerker treedt uit dienst** |	HelloID houdt het dienstverband van werknemers in het oog, en detecteert indien deze afloopt. Voor het intrekken van de autorisaties van de uitstromende gebruiker en blokkeren van gebruikersaccounts in doelsystemen kan de IAM-oplossing informatie uit SQL-databases gebruiken.|
 
 ## Gegevensuitwissseling op maat
 
@@ -50,6 +50,6 @@ Daarnaast bepaal je tot in detail welke informatie HelloID via de SQL-connector 
 
 Met behulp van HelloID kan je SQL met diverse systemen integreren, waarbij je afhankelijk van je toepassing SQL als bron- of doelsysteem kunt inzetten. Met behulp van de integraties versterk je het beheer van zowel gebruikersaccounts als autorisaties. Een voorbeeld van een veelvoorkomende integratie is: 
 
-*	**Microsoft Active Directory/Entra ID - SQL koppeling:** In dit geval koppel je één of meerdere SQL-databases met behulp van een connector via HelloID aan Microsoft Active Directory. Dit biedt meerdere mogelijkheden. Zo kan je enerzijds informatie ophalen uit je SQL-databases die een aanvulling op de gegevens die HelloID verkrijgt vanuit Microsoft Active Directory of Entra ID. Anderzijds kan je informatie wegschrijven naar een SQL-database, bijvoorbeeld indien je hierin accounts opslaat. 
+*	**Microsoft Active Directory/Entra ID - SQL koppeling:** In dit geval koppel je één of meerdere SQL-databases met behulp van een connector via HelloID aan Microsoft Active Directory. Dit biedt meerdere mogelijkheden. Enerzijds kan SQL database als bron ingezet worden om zo de Microsoft Active Directory of Entra ID account te provisionen. Anderzijds kan je informatie wegschrijven naar een SQL-database, bijvoorbeeld indien je hierin accounts opslaat. 
 
-HelloID ondersteunt ruim 200 connectoren. De IAM-oplossing biedt dan ook een breed scala aan integratiemogelijkheden tussen je bron- en doelsystemen en allerlei andere toepassingen zoals SQL-databases. Ons aanbod aan connectoren en integraties groeit continu. Zo maken we het mogelijk HelloID met nagenoeg alle populaire systemen te integreren. 
+HelloID ondersteunt ruim 200 connectoren. De IAM-oplossing biedt dan ook een breed scala aan integratiemogelijkheden tussen je bron- en doelsystemen en allerlei andere toepassingen zoals SQL-databases. Ons aanbod aan connectoren en integraties groeit continu. Zo maken we het mogelijk HelloID met nagenoeg alle populaire systemen te integreren. Op onze website vind je <a href="https://www.tools4ever.nl/connectoren/">een overzicht van alle beschikbare connectoren.</a> 
