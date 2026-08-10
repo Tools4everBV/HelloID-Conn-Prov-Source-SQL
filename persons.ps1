@@ -1,4 +1,4 @@
-function PerfromQuery($Query, $ConnectionString) {
+function PerformQuery($Query, $ConnectionString) {
     try {
         # Initialize connection and query information
         # Connect to the SQL server
@@ -98,11 +98,11 @@ $departmentsQuery = "SELECT [Organisatorische_eenheid] as [Id]
                     FROM [dbo].[T4E_IAM_OrganizationalUnits] WHERE [lang_id] in $languageId"
 
     
-$persons = PerfromQuery -Query $personQuery -ConnectionString $connectionString
+$persons = PerformQuery -Query $personQuery -ConnectionString $connectionString
 #$personLookup = $persons | ForEach-Object { $_ } #copy persons
-$contracts = PerfromQuery -Query $contractsQuery -ConnectionString $connectionString
-$functions = PerfromQuery -Query $functionsQuery -ConnectionString $connectionString
-$departments = PerfromQuery -Query $departmentsQuery -ConnectionString $connectionString
+$contracts = PerformQuery -Query $contractsQuery -ConnectionString $connectionString
+$functions = PerformQuery -Query $functionsQuery -ConnectionString $connectionString
+$departments = PerformQuery -Query $departmentsQuery -ConnectionString $connectionString
 
 
 Foreach ($person in $persons) {

@@ -1,4 +1,4 @@
-function PerfromQuery($Query, $ConnectionString) {
+function PerformQuery($Query, $ConnectionString) {
     try {
         # Initialize connection and query information
         # Connect to the SQL server
@@ -40,7 +40,7 @@ $departmentsQuery = "SELECT [Organisatorische_eenheid] as [ExternalId]
                             ,[Parent] as [ParentDepartmentId]
                     FROM [dbo].[T4E_IAM_OrganizationalUnits] WHERE [lang_id] in $languageId"
 
-$departments = PerfromQuery -Query $departmentsQuery -ConnectionString $connectionString
+$departments = PerformQuery -Query $departmentsQuery -ConnectionString $connectionString
     
 Foreach ($department in $departments) {
     Write-Output $department | ConvertTo-Json -Depth 10;
